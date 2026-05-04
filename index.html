@@ -44,12 +44,18 @@
         <p>Kies je klas en voer je naam in om de casus <strong>Beukenlaan 8</strong> te starten.</p>
         <select id="klas_select">
             <option value="">-- Selecteer NATO klas --</option>
-            <option value="Alpha">Alpha</option><option value="Bravo">Bravo</option>
-            <option value="Charlie">Charlie</option><option value="Delta">Delta</option>
-            <option value="Echo">Echo</option><option value="Foxtrot">Foxtrot</option>
-            <option value="Golf">Golf</option><option value="Hotel">Hotel</option>
-            <option value="India">India</option><option value="Kilo">Kilo</option>
-            <option value="Lima">Lima</option><option value="Mike">Mike</option>
+            <option value="Alpha">Alpha</option>
+            <option value="Bravo">Bravo</option>
+            <option value="Charlie">Charlie</option>
+            <option value="Delta">Delta</option>
+            <option value="Echo">Echo</option>
+            <option value="Foxtrot">Foxtrot</option>
+            <option value="Golf">Golf</option>
+            <option value="Hotel">Hotel</option>
+            <option value="Juliet">Juliet</option>
+            <option value="Kilo">Kilo</option>
+            <option value="Lima">Lima</option>
+            <option value="Mike">Mike</option>
         </select>
         <input type="text" id="user_naam" placeholder="Jouw voornaam...">
         <button class="btn-audio play" style="width:100%; padding:15px; font-size: 18px;" onclick="startSessie()">Start Training</button>
@@ -68,7 +74,7 @@
                 Houd bij de benadering rekening met de persoonlijke achtergrond van de bewoner: de man heeft een lichte verstandelijke beperking (LVB) en begrijpt de impact van zijn gedrag of de communicatie van de buurvrouw vaak niet goed. Hij krijgt begeleiding vanuit Stichting Philadelphia van Danny van der Meer. Gezien de eerdere handhavingsstappen en de huidige emotionele staat van de bewoner is er een verhoogd risico op onbegrip of fysiek verzet. Werk waar mogelijk de-escalerend, maar voer de inbeslagname conform de dwingende opdracht uit."
             </div>
             <div class="audio-btns">
-                <button class="btn-audio play" style="background:white; color:#003082;" onclick="speak('tekst_oc')">Speel Porto-bericht (TTS)</button>
+                <button class="btn-audio play" style="background:white; color:#003082;" onclick="speak('tekst_oc')">Speel Porto-bericht</button>
                 <button class="btn-audio stop" onclick="stopAudio()">Stop</button>
             </div>
         </div>
@@ -78,7 +84,7 @@
                 <strong>Geluidsopname: Situatie ter plaatse</strong>
                 <p style="font-size: 0.85em; color: #666; margin-top: 5px;">Luister naar de geluiden en de interactie in de woning voor je mutatie.</p>
                 
-                <audio id="audio_casus" src="casusburenoverlast2545M.mp3"></audio>
+                <audio id="audio_casus" src="casusburenoverlast2545M.mp3" preload="auto"></audio>
 
                 <div class="audio-btns">
                     <button class="btn-audio play" onclick="playFile()">Speel MP3 af</button>
@@ -113,7 +119,7 @@
                 <div class="fb-box"><strong>Feedback van collega:</strong> <span id="fb_daa">Wachten...</span></div>
                 
                 <label style="display:block; margin-top:20px;"><strong>Mutatie (OVT):</strong></label>
-                <textarea id="my_mut" style="height:250px;" oninput="saveData()" placeholder="Schrijf de mutatie in de OVT. Beschrijf de situatie 'filmisch': wat zag, hoorde en rook je? Let op de Gouden W's."></textarea>
+                <textarea id="my_mut" style="height:250px;" oninput="saveData()" placeholder="Schrijf de mutatie in de OVT. Beschrijf de situatie 'filmisch': wat zag, hoorde en rook je?"></textarea>
                 <div class="fb-box"><strong>Feedback van collega:</strong> <span id="fb_mut">Wachten...</span></div>
             </div>
 
@@ -151,21 +157,15 @@
     let synth = window.speechSynthesis;
     let m_naam = ""; let m_klas = ""; let t_peer = "";
 
-    // MP3 functies
-    window.playFile = () => {
-        const audio = document.getElementById('audio_casus');
-        audio.play();
-    };
-    window.stopFile = () => {
-        const audio = document.getElementById('audio_casus');
-        audio.pause();
-        audio.currentTime = 0;
-    };
-
     window.startSessie = () => {
         m_klas = document.getElementById('klas_select').value;
         m_naam = document.getElementById('user_naam').value.trim();
         if(!m_klas || !m_naam) return alert("Kies een klas en voer je naam in.");
+
+        const audio = document.getElementById('audio_casus');
+        audio.load();
+        const silentUtter = new SpeechSynthesisUtterance("");
+        synth.speak(silentUtter);
 
         document.getElementById('welkom_titel').innerText = `Agent: ${m_naam} (Klas: ${m_klas})`;
         document.getElementById('step0').style.display = 'none';
@@ -173,6 +173,17 @@
         
         fillPeers();
         listenMyFb();
+    };
+
+    window.playFile = () => {
+        const audio = document.getElementById('audio_casus');
+        audio.play().catch(e => console.error("Audio error:", e));
+    };
+
+    window.stopFile = () => {
+        const audio = document.getElementById('audio_casus');
+        audio.pause();
+        audio.currentTime = 0;
     };
 
     window.speak = (elId) => {
@@ -187,6 +198,7 @@
     window.stopAudio = () => synth.cancel();
 
     window.saveData = () => {
+        if(!m_naam) return;
         update(ref(db, `klassen/${m_klas}/${m_naam}`), {
             daa: document.getElementById('my_daa').value,
             mutatie: document.getElementById('my_mut').value

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politie Training: Casus Beukenlaan 8</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #003082; border-bottom: 3px solid #003082; text-align: center; }
+        
+        /* OC Melding Breed */
+        .oc-melding { background: #003082; color: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 10px solid #d32f2f; }
+        .oc-header { font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .oc-content { font-family: 'Courier New', monospace; font-size: 1.05em; }
+
+        /* Audio Sectie */
+        .audio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .audio-card { background: #f8f9fa; border: 1px solid #003082; padding: 20px; border-radius: 8px; position: relative; }
+        .audio-btns { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-audio { padding: 10px 15px; cursor: pointer; border-radius: 4px; border: 1px solid #003082; font-weight: bold; }
+        .play { background: #003082; color: white; }
+        .pause { background: #ffb300; color: black; }
+        .stop { background: #d32f2f; color: white; }
+
+        /* Gouden W-Badge */
+        .w-info { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed #003082; border-radius: 5px; font-size: 0.85em; color: #333; }
+
+        /* Werkruimte */
+        .section-split { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .column { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        textarea { width: 100%; height: 220px; padding: 12px; margin-top: 10px; border: 2px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .fb-box { background: #e3f2fd; padding: 12px; margin-top: 10px; border-left: 5px solid #2196f3; font-style: italic; min-height: 20px; }
+        
+        /* Inlog / Reset */
+        .step { display: none; } 
+        .active { display: block; }
+        .login-box { max-width: 450px; margin: 50px auto; text-align: center; background: white; padding: 40px; border-radius: 12px; border: 2px solid #003082; }
+        select, input { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; box-sizing: border-box; }
+        
+        .btn-finish { background: #d32f2f; color: white; padding: 15px; width: 100%; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 30px; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div id="step0" class="step active login-box">
+        <h2 style="color:#003082;">Systeem Inlog</h2>
+        <p>Kies je klas en voer je naam in om de casus <strong>Beukenlaan 8</strong> te starten.</p>
+        <select id="klas_select">
+            <option value="">-- Selecteer NATO klas --</option>
+            <option value="Alpha">Alpha</option><option value="Bravo">Bravo</option>
+            <option value="Charlie">Charlie</option><option value="Delta">Delta</option>
+            <option value="Echo">Echo</option><option value="Foxtrot">Foxtrot</option>
+            <option value="Golf">Golf</option><option value="Hotel">Hotel</option>
+            <option value="India">India</option><option value="Kilo">Kilo</option>
+            <option value="Lima">Lima</option><option value="Mike">Mike</option>
+        </select>
+        <input type="text" id="user_naam" placeholder="Jouw voornaam...">
+        <button class="btn-audio play" style="width:100%; padding:15px; font-size: 18px;" onclick="startSessie()">Start Training</button>
+    </div>
+
+    <div id="step1" class="step">
+        <h1 id="welkom_titel">Incident Monitor</h1>
+
+        <div class="oc-melding">
+            <div class="oc-header">📡 MELDING OPERATIONEEL CENTRUM (14:00 UUR)</div>
+            <div id="tekst_oc" class="oc-content">
+                "Verzoek te gaan naar het adres Beukenlaan 8 te XX. Er zijn achtereenvolgens meerdere meldingen gedaan door de buurvrouw van het huis ernaast op huisnummer 10. Zij geeft aan dat bij de buren de hele dag muziek hard aanstaat en kinderen lawaai maken door hard door het huis te rennen en met deuren te slaan. RTIC geeft aan: familie De Groot (man, vrouw, twee kinderen) staat hier ingeschreven en is bekend bij de wijkagent."
+            </div>
+            <div class="audio-btns">
+                <button class="btn-audio play" style="background:white; color:#003082;" onclick="speak('tekst_oc')">Speel Porto-bericht</button>
+                <button class="btn-audio stop" onclick="stopAudio()">Stop</button>
+            </div>
+        </div>
+        
+        <div class="audio-grid">
+            <div class="audio-card">
+                <strong>Betrokkene 1: Dhr. De Groot (Nr. 8)</strong>
+                <p id="tekst_degroot" style="font-size: 0.9em; color: #444; height: 110px; overflow-y: auto; margin-bottom: 10px;">
+                    De man blijft erg vriendelijk en vindt het zichtbaar fijn dat hij bezoek heeft. Hij biedt jullie meerdere malen koffie aan. Jullie besluiten de reden van je bezoek toe te lichten en de man wordt zichtbaar verdrietig. Hij geeft aan dat hij inderdaad al langere tijd problemen met de buurvrouw heeft, maar altijd het gevoel heeft dat zij hem en zijn gezin niet serieus neemt. Hij begrijpt vaak niet wat ze zegt of hoe ze dingen bedoelt. De man blijkt licht verstandelijk beperkt te zijn en krijgt begeleiding vanuit hulpverleningsinstanties.
+                </p>
+                <div class="w-info">
+                    <strong>Hulpverlening details:</strong><br>
+                    • Instantie: Stichting Philadelphia<br>
+                    • Begeleider: Jasper van der Meer<br>
+                    • Telefoon: 06-12345678
+                </div>
+                <div class="audio-btns">
+                    <button class="btn-audio play" onclick="speak('tekst_degroot')">Afspelen</button>
+                    <button class="btn-audio pause" onclick="pauseAudio()">Pauze</button>
+                    <button class="btn-audio stop" onclick="stopAudio()">Stop</button>
+                </div>
+            </div>
+
+            <div class="audio-card">
+                <strong>Betrokkene 2: Meldster (Nr. 10)</strong>
+                <p id="tekst_buurvrouw" style="font-size: 0.9em; color: #444; height: 110px; overflow-y: auto; margin-bottom: 10px;">
+                    Ze geeft aan zich niet gehoord te voelen en al vaak contact te hebben gehad met de wijkagent. Het contact verloopt volgens haar stroef en ze heeft niet het gevoel dat er iets met haar meldingen gedaan wordt. Zelf geeft ze aan dat de overlast een dagelijkse kwelling is en dat ze zelfs twijfelt of ze er wil blijven wonen. Ze eist van jou dat je nu per direct actie onderneemt. Ze verwijt dat jullie niks doen en jullie allemaal hetzelfde zijn. Als jullie nu niks doen, gaat de vrouw een klacht indienen.
+                </p>
+                <div class="audio-btns" style="margin-top: 78px;"> <button class="btn-audio play" onclick="speak('tekst_buurvrouw')">Afspelen</button>
+                    <button class="btn-audio pause" onclick="pauseAudio()">Pauze</button>
+                    <button class="btn-audio stop" onclick="stopAudio()">Stop</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-split">
+            <div class="column">
+                <h3>1. Rapportage & Administratie</h3>
+                <label><strong>DAA (Doel, Aanpak, Afloop):</strong></label>
+                <textarea id="my_daa" oninput="saveData()" placeholder="Noteer je plan en resultaat..."></textarea>
+                <div class="fb-box"><strong>Feedback van collega:</strong> <span id="fb_daa">Wachten...</span></div>
+                
+                <label style="display:block; margin-top:20px;"><strong>Mutatie (OVT):</strong></label>
+                <textarea id="my_mut" style="height:250px;" oninput="saveData()" placeholder="Schrijf de mutatie. Let op zintuiglijke waarnemingen en de Gouden W's..."></textarea>
+                <div class="fb-box"><strong>Feedback van collega:</strong> <span id="fb_mut">Wachten...</span></div>
+            </div>
+
+            <div class="column" style="background:#fffdf5; border-top: 5px solid #ffb300;">
+                <h3>2. Collega Beoordelen</h3>
+                <select id="peer_select" onchange="loadPeer()" style="width:100%; padding:12px;"></select>
+                
+                <div id="peer_area" style="display:none; margin-top:20px;">
+                    <strong>Werk van <span id="p_name"></span>:</strong>
+                    <div id="p_text" style="background:#eee; padding:15px; min-height:150px; margin:10px 0; border-radius:5px; white-space: pre-wrap; font-size: 0.9em; border: 1px inset #ccc;"></div>
+                    <label>Jouw feedback:</label>
+                    <input type="text" id="peer_fb_input" style="width:100%; padding:12px;" placeholder="Geef hier je tips en tops..." oninput="sendFb(this.value)">
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-finish" onclick="sessieBeeindigen()">Sessie beëindigen & Uitloggen</button>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+    import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA3_rzoZOWytlyAbYKKe_WuFlD8z2WvbX4",
+        authDomain: "aangifteq2les1.firebaseapp.com",
+        databaseURL: "https://aangifteq2les1-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "aangifteq2les1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let synth = window.speechSynthesis;
+    let m_naam = ""; let m_klas = ""; let t_peer = "";
+
+    window.startSessie = () => {
+        m_klas = document.getElementById('klas_select').value;
+        m_naam = document.getElementById('user_naam').value.trim();
+        if(!m_klas || !m_naam) return alert("Kies een klas en voer je naam in.");
+
+        document.getElementById('welkom_titel').innerText = `Agent: ${m_naam} (Klas: ${m_klas})`;
+        document.getElementById('step0').style.display = 'none';
+        document.getElementById('step1').style.display = 'block';
+        
+        fillPeers();
+        listenMyFb();
+    };
+
+    window.speak = (elId) => {
+        synth.cancel();
+        const text = document.getElementById(elId).innerText;
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'nl-NL';
+        utter.rate = 0.95;
+        synth.speak(utter);
+    };
+
+    window.pauseAudio = () => synth.pause();
+    window.stopAudio = () => synth.cancel();
+
+    window.saveData = () => {
+        update(ref(db, `klassen/${m_klas}/${m_naam}`), {
+            daa: document.getElementById('my_daa').value,
+            mutatie: document.getElementById('my_mut').value
+        });
+    };
+
+    function fillPeers() {
+        onValue(ref(db, `klassen/${m_klas}`), (s) => {
+            const sel = document.getElementById('peer_select');
+            sel.innerHTML = '<option value="">-- Kies een collega --</option>';
+            const data = s.val();
+            for(let n in data) if(n !== m_naam) {
+                let o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o);
+            }
+        });
+    }
+
+    window.loadPeer = () => {
+        t_peer = document.getElementById('peer_select').value;
+        if(!t_peer) return;
+        document.getElementById('peer_area').style.display = 'block';
+        document.getElementById('p_name').innerText = t_peer;
+        onValue(ref(db, `klassen/${m_klas}/${t_peer}`), (s) => {
+            const d = s.val();
+            if(d) document.getElementById('p_text').innerText = "DAA:\n" + (d.daa || "") + "\n\nMutatie:\n" + (d.mutatie || "");
+        });
+    };
+
+    window.sendFb = (v) => {
+        if(!t_peer) return;
+        update(ref(db, `klassen/${m_klas}/${t_peer}`), { peerFeedbackMutatie: v });
+    };
+
+    function listenMyFb() {
+        onValue(ref(db, `klassen/${m_klas}/${m_naam}`), (s) => {
+            const d = s.val();
+            if(d) {
+                document.getElementById('fb_daa').innerText = d.peerFeedbackDAA || "Nog geen feedback...";
+                document.getElementById('fb_mut').innerText = d.peerFeedbackMutatie || "Nog geen feedback...";
+            }
+        });
+    }
+
+    window.sessieBeeindigen = () => {
+        if(confirm("Sessie beëindigen? Je keert terug naar het inlogscherm.")) {
+            synth.cancel();
+            location.reload(); 
+        }
+    };
+</script>
+</body>
+</html>

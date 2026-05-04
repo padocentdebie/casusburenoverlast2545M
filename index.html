@@ -9,30 +9,24 @@
         .container { max-width: 1200px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         h1 { color: #003082; border-bottom: 3px solid #003082; text-align: center; }
         
-        /* OC Melding Breed */
         .oc-melding { background: #003082; color: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 10px solid #d32f2f; }
         .oc-header { font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
-        .oc-content { font-family: 'Courier New', monospace; font-size: 1.05em; }
+        .oc-content { font-family: 'Courier New', monospace; font-size: 1.05em; line-height: 1.4; }
 
-        /* Audio Sectie */
         .audio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
         .audio-card { background: #f8f9fa; border: 1px solid #003082; padding: 20px; border-radius: 8px; position: relative; }
         .audio-btns { display: flex; gap: 10px; margin-top: 15px; }
         .btn-audio { padding: 10px 15px; cursor: pointer; border-radius: 4px; border: 1px solid #003082; font-weight: bold; }
         .play { background: #003082; color: white; }
-        .pause { background: #ffb300; color: black; }
         .stop { background: #d32f2f; color: white; }
 
-        /* Gouden W-Badge */
         .w-info { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed #003082; border-radius: 5px; font-size: 0.85em; color: #333; }
 
-        /* Werkruimte */
         .section-split { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .column { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
         textarea { width: 100%; height: 220px; padding: 12px; margin-top: 10px; border: 2px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
         .fb-box { background: #e3f2fd; padding: 12px; margin-top: 10px; border-left: 5px solid #2196f3; font-style: italic; min-height: 20px; }
         
-        /* Inlog / Reset */
         .step { display: none; } 
         .active { display: block; }
         .login-box { max-width: 450px; margin: 50px auto; text-align: center; background: white; padding: 40px; border-radius: 12px; border: 2px solid #003082; }
@@ -67,40 +61,45 @@
         <div class="oc-melding">
             <div class="oc-header">📡 MELDING OPERATIONEEL CENTRUM (14:00 UUR)</div>
             <div id="tekst_oc" class="oc-content">
-                "Verzoek te gaan naar het adres Beukenlaan 8 te XX. Er zijn achtereenvolgens meerdere meldingen gedaan door de buurvrouw van het huis ernaast op huisnummer 10. Zij geeft aan dat bij de buren de hele dag muziek hard aanstaat en kinderen lawaai maken door hard door het huis te rennen en met deuren te slaan. RTIC geeft aan: familie De Groot (man, vrouw, twee kinderen) staat hier ingeschreven en is bekend bij de wijkagent."
+                "Eenheid voor de Beukenlaan 8 te XX. Er is een melding van extreme burenoverlast op dit adres. De meldster op huisnummer 10 geeft aan dat er sprake is van harde 'bonk-muziek' die door de muren dreunt, het geluid van vallende potten en pannen en zwaar gestamp door de gehele woning. De meldster ervaart dit als een dagelijkse kwelling en dreigt met een formele klacht tegen de politie wegens passiviteit.
+                <br><br>
+                Uit het RTIC blijkt dat de bewoner van nummer 8 voor exact dezelfde gedragingen reeds een officiële waarschuwing en een bekeuring heeft ontvangen. De opdracht van de wijkagent is dat er bij verificatie van de overlast nu direct wordt overgegaan tot inbeslagname van de geluidsapparatuur. 
+                <br><br>
+                Houd bij de benadering rekening met de persoonlijke achtergrond van de bewoner: de man heeft een lichte verstandelijke beperking (LVB) en begrijpt de impact van zijn gedrag of de communicatie van de buurvrouw vaak niet goed. Hij krijgt begeleiding vanuit Stichting Philadelphia van Danny van der Meer. Gezien de eerdere handhavingsstappen en de huidige emotionele staat van de bewoner is er een verhoogd risico op onbegrip of fysiek verzet. Werk waar mogelijk de-escalerend, maar voer de inbeslagname conform de dwingende opdracht uit."
             </div>
             <div class="audio-btns">
-                <button class="btn-audio play" style="background:white; color:#003082;" onclick="speak('tekst_oc')">Speel Porto-bericht</button>
+                <button class="btn-audio play" style="background:white; color:#003082;" onclick="speak('tekst_oc')">Speel Porto-bericht (TTS)</button>
                 <button class="btn-audio stop" onclick="stopAudio()">Stop</button>
             </div>
         </div>
         
         <div class="audio-grid">
             <div class="audio-card">
-                <strong>Betrokkene 1: Dhr. De Groot (Nr. 8)</strong>
-                <p id="tekst_degroot" style="font-size: 0.9em; color: #444; height: 110px; overflow-y: auto; margin-bottom: 10px;">
-                    De man blijft erg vriendelijk en vindt het zichtbaar fijn dat hij bezoek heeft. Hij biedt jullie meerdere malen koffie aan. Jullie besluiten de reden van je bezoek toe te lichten en de man wordt zichtbaar verdrietig. Hij geeft aan dat hij inderdaad al langere tijd problemen met de buurvrouw heeft, maar altijd het gevoel heeft dat zij hem en zijn gezin niet serieus neemt. Hij begrijpt vaak niet wat ze zegt of hoe ze dingen bedoelt. De man blijkt licht verstandelijk beperkt te zijn en krijgt begeleiding vanuit hulpverleningsinstanties.
-                </p>
-                <div class="w-info">
-                    <strong>Hulpverlening details:</strong><br>
-                    • Instantie: Stichting Philadelphia<br>
-                    • Begeleider: Jasper van der Meer<br>
-                    • Telefoon: 06-12345678
-                </div>
+                <strong>Geluidsopname: Situatie ter plaatse</strong>
+                <p style="font-size: 0.85em; color: #666; margin-top: 5px;">Luister naar de geluiden en de interactie in de woning voor je mutatie.</p>
+                
+                <audio id="audio_casus" src="casusburenoverlast2545M.mp3"></audio>
+
                 <div class="audio-btns">
-                    <button class="btn-audio play" onclick="speak('tekst_degroot')">Afspelen</button>
-                    <button class="btn-audio pause" onclick="pauseAudio()">Pauze</button>
-                    <button class="btn-audio stop" onclick="stopAudio()">Stop</button>
+                    <button class="btn-audio play" onclick="playFile()">Speel MP3 af</button>
+                    <button class="btn-audio stop" onclick="stopFile()">Stop</button>
+                </div>
+
+                <div class="w-info">
+                    <strong>Hulpverlening details (RTIC):</strong><br>
+                    • Instantie: Stichting Philadelphia<br>
+                    • Begeleider: Danny van der Meer<br>
+                    • Status: Waarschuwing & Bekeuring reeds uitgereikt.
                 </div>
             </div>
 
             <div class="audio-card">
-                <strong>Betrokkene 2: Meldster (Nr. 10)</strong>
+                <strong>Betrokkene: Meldster (Nr. 10)</strong>
                 <p id="tekst_buurvrouw" style="font-size: 0.9em; color: #444; height: 110px; overflow-y: auto; margin-bottom: 10px;">
-                    Ze geeft aan zich niet gehoord te voelen en al vaak contact te hebben gehad met de wijkagent. Het contact verloopt volgens haar stroef en ze heeft niet het gevoel dat er iets met haar meldingen gedaan wordt. Zelf geeft ze aan dat de overlast een dagelijkse kwelling is en dat ze zelfs twijfelt of ze er wil blijven wonen. Ze eist van jou dat je nu per direct actie onderneemt. Ze verwijt dat jullie niks doen en jullie allemaal hetzelfde zijn. Als jullie nu niks doen, gaat de vrouw een klacht indienen.
+                    Ze geeft aan zich niet gehoord te voelen en al vaak contact te hebben gehad met de wijkagent. Het contact verloopt volgens haar stroef. Ze eist dat je nu per direct actie onderneemt en de bron van de overlast verwijdert. "Jullie doen altijd niks, maar nu is de maat vol," aldus de meldster.
                 </p>
-                <div class="audio-btns" style="margin-top: 78px;"> <button class="btn-audio play" onclick="speak('tekst_buurvrouw')">Afspelen</button>
-                    <button class="btn-audio pause" onclick="pauseAudio()">Pauze</button>
+                <div class="audio-btns" style="margin-top: 40px;"> 
+                    <button class="btn-audio play" onclick="speak('tekst_buurvrouw')">Beluister relaas</button>
                     <button class="btn-audio stop" onclick="stopAudio()">Stop</button>
                 </div>
             </div>
@@ -110,11 +109,11 @@
             <div class="column">
                 <h3>1. Rapportage & Administratie</h3>
                 <label><strong>DAA (Doel, Aanpak, Afloop):</strong></label>
-                <textarea id="my_daa" oninput="saveData()" placeholder="Noteer je plan en resultaat..."></textarea>
+                <textarea id="my_daa" oninput="saveData()" placeholder="Wat was je doel, hoe heb je het aangepakt en wat was de afloop?"></textarea>
                 <div class="fb-box"><strong>Feedback van collega:</strong> <span id="fb_daa">Wachten...</span></div>
                 
                 <label style="display:block; margin-top:20px;"><strong>Mutatie (OVT):</strong></label>
-                <textarea id="my_mut" style="height:250px;" oninput="saveData()" placeholder="Schrijf de mutatie. Let op zintuiglijke waarnemingen en de Gouden W's..."></textarea>
+                <textarea id="my_mut" style="height:250px;" oninput="saveData()" placeholder="Schrijf de mutatie in de OVT. Beschrijf de situatie 'filmisch': wat zag, hoorde en rook je? Let op de Gouden W's."></textarea>
                 <div class="fb-box"><strong>Feedback van collega:</strong> <span id="fb_mut">Wachten...</span></div>
             </div>
 
@@ -152,6 +151,17 @@
     let synth = window.speechSynthesis;
     let m_naam = ""; let m_klas = ""; let t_peer = "";
 
+    // MP3 functies
+    window.playFile = () => {
+        const audio = document.getElementById('audio_casus');
+        audio.play();
+    };
+    window.stopFile = () => {
+        const audio = document.getElementById('audio_casus');
+        audio.pause();
+        audio.currentTime = 0;
+    };
+
     window.startSessie = () => {
         m_klas = document.getElementById('klas_select').value;
         m_naam = document.getElementById('user_naam').value.trim();
@@ -174,7 +184,6 @@
         synth.speak(utter);
     };
 
-    window.pauseAudio = () => synth.pause();
     window.stopAudio = () => synth.cancel();
 
     window.saveData = () => {
